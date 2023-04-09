@@ -19,15 +19,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider(create: (context) => CounterModel()),
+    //   ],
+    //   child: const MaterialApp(home: MyHomgPage()),
+    // );
     return ChangeNotifierProvider(
       create: (context) => CounterModel(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomgPage(),
-      ),
+      child: const MaterialApp(home: MyHomgPage()),
     );
   }
 }
