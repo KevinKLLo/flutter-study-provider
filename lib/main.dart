@@ -5,36 +5,28 @@ import 'package:state_management/counter_page.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CounterModel(),
-      child: const MyApp(),
-    ),
+    // 錯誤做法
+    // ChangeNotifierProvider(
+    //   create: (context) => CounterModel(),
+    //   child: const MyApp(),
+    // ),
+    const MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: ChangeNotifierProvider(
-        create: (context) => CounterModel(),
-        child: const MyHomgPage(),
+    return ChangeNotifierProvider(
+      create: (context) => CounterModel(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomgPage(),
       ),
     );
   }
@@ -45,27 +37,53 @@ class MyHomgPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 作法 2.
+    final counter = Provider.of<CounterModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
       ),
       body: Center(
-        child: Consumer<CounterModel>(
-          builder: (context, counter, child) => Text(
-            'Total count: ${counter.count}',
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 作法 2.
+            Text(
+              'Total count: ${counter.count}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            // Consumer<CounterModel>(
+            //   builder: (context, counter, child) => Text(
+            //     'Total count: ${counter.count}',
+            //   ),
+            // ),
+            IconButton(
+              onPressed: () {
+                Provider.of<CounterModel>(context, listen: false).resetCount();
+              },
+              icon: const Icon(Icons.reset_tv),
+            )
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider(
-                create: (context) => CounterModel(),
-                child: const CounterPage(title: 'Flutter Demo Home Page')),
-          ),
-        );
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            // 錯誤做法
+            // MaterialPageRoute(
+            //   builder: (context) => ChangeNotifierProvider(
+            //       create: (context) => CounterModel(),
+            //       child: const CounterPage(title: 'Flutter Demo Home Page')),
+            // ),
+            MaterialPageRoute(
+              builder: (context) =>
+                  const CounterPage(title: 'Flutter Demo Home Page'),
+            ),
+          );
+        },
+        child: const Icon(Icons.arrow_forward_ios),
+      ),
     );
   }
 }

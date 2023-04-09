@@ -4,9 +4,12 @@ class CounterModel extends ChangeNotifier {
   int count = 0;
 
   void addCount() {
-    count += 1;
+    count++;
     notifyListeners();
   }
 
-  void resetCount() {}
+  void resetCount() {
+    count = 0;
+    notifyListeners();
+  }
 }
