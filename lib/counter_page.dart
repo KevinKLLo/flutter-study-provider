@@ -38,7 +38,16 @@ class CounterPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Provider.of<CounterModel>(context, listen: false).addCount();
+          // 作法 2.
+          // var counterModel = context.read<CounterModel>();
+          // counterModel.addCount();
+          Provider.of<CounterModel>(context, listen: true).addCount();
+          // Consumer<CounterModel>(
+          //   builder: (context, counter, child) {
+          //     counter.addCount();
+          //     return Text('data');
+          //   },
+          // );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
