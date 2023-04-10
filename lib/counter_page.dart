@@ -41,13 +41,7 @@ class CounterPage extends StatelessWidget {
           // 作法 2.
           // var counterModel = context.read<CounterModel>();
           // counterModel.addCount();
-          Provider.of<CounterModel>(context, listen: true).addCount();
-          // Consumer<CounterModel>(
-          //   builder: (context, counter, child) {
-          //     counter.addCount();
-          //     return Text('data');
-          //   },
-          // );
+          Provider.of<CounterModel>(context, listen: false).addCount();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

@@ -19,16 +19,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 錯誤做法
+    // return const MaterialApp(
+    //   home: MyHomgPage(),
+    // );
+    return ChangeNotifierProvider(
+      create: (context) => CounterModel(),
+      child: const MaterialApp(home: MyHomgPage()),
+    );
+    // 一般會是複數 Provider
     // return MultiProvider(
     //   providers: [
     //     ChangeNotifierProvider(create: (context) => CounterModel()),
     //   ],
     //   child: const MaterialApp(home: MyHomgPage()),
     // );
-    return ChangeNotifierProvider(
-      create: (context) => CounterModel(),
-      child: const MaterialApp(home: MyHomgPage()),
-    );
   }
 }
 
@@ -38,7 +43,9 @@ class MyHomgPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 作法 2.
-    final counter = Provider.of<CounterModel>(context);
+    // final counter = Provider.of<CounterModel>(context);
+    final counterModel = context.read<CounterModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
@@ -48,18 +55,22 @@ class MyHomgPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // 作法 2.
-            Text(
-              'Total count: ${counter.count}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            // Consumer<CounterModel>(
-            //   builder: (context, counter, child) => Text(
-            //     'Total count: ${counter.count}',
-            //   ),
+            // Text(
+            //   'Total count: ${counter.count}',
+            //   style: Theme.of(context).textTheme.headlineMedium,
             // ),
+            Consumer<CounterModel>(
+              builder: (context, counter, child) => Text(
+                'Total count: ${counter.count}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
             IconButton(
               onPressed: () {
-                Provider.of<CounterModel>(context, listen: false).resetCount();
+                // 作法 2.
+                // var counterModel = context.read<CounterModel>();
+                counterModel.resetCount();
+                // Provider.of<CounterModel>(context, listen: false).resetCount();
               },
               icon: const Icon(Icons.reset_tv),
             )
