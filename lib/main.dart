@@ -65,14 +65,17 @@ class MyHomgPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            IconButton(
+            const SizedBox(height: 10),
+            TextButton(
               onPressed: () {
                 // 作法 2.
                 // var counterModel = context.read<CounterModel>();
                 counterModel.resetCount();
                 // Provider.of<CounterModel>(context, listen: false).resetCount();
               },
-              icon: const Icon(Icons.reset_tv),
+              child: const Text(
+                'Reset count',
+              ),
             )
           ],
         ),
@@ -88,8 +91,7 @@ class MyHomgPage extends StatelessWidget {
             //       child: const CounterPage(title: 'Flutter Demo Home Page')),
             // ),
             MaterialPageRoute(
-              builder: (context) =>
-                  const CounterPage(title: 'Flutter Demo Home Page'),
+              builder: (context) => const CounterPage(),
             ),
           );
         },
