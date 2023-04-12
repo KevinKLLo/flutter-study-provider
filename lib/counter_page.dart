@@ -3,9 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:state_management/Model/counter_model.dart';
 
 class CounterPage extends StatelessWidget {
-  const CounterPage({super.key, required this.title});
-
-  final String title;
+  const CounterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +11,18 @@ class CounterPage extends StatelessWidget {
     // final counter = Provider.of<CounterModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text('CounterPage'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            const Text('You have pushed the button this many times:'),
             // 作法 2.
             // Text('${counter.count}'),
             Consumer<CounterModel>(
               builder: (context, counter, child) {
-                return Text(
-                  '${counter.count}',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                );
+                return Text('${counter.count}');
               },
             ),
           ],

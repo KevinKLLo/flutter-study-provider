@@ -44,7 +44,7 @@ class MyHomgPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // 作法 2.
     // final counter = Provider.of<CounterModel>(context);
-    final counterModel = context.read<CounterModel>();
+    // final counterModel = context.read<CounterModel>();
 
     return Scaffold(
       appBar: AppBar(
@@ -60,18 +60,20 @@ class MyHomgPage extends StatelessWidget {
             //   style: Theme.of(context).textTheme.headlineMedium,
             // ),
             Consumer<CounterModel>(
-              builder: (context, counter, child) => Text(
-                'Total count: ${counter.count}',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+              builder: (context, counter, child) {
+                return Text('Total count: ${counter.count}');
+              },
+              // builder: (context, counter, child) => Text(
+              //   'Total count: ${counter.count}'
+              // ),
             ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 // 作法 2.
                 // var counterModel = context.read<CounterModel>();
-                counterModel.resetCount();
-                // Provider.of<CounterModel>(context, listen: false).resetCount();
+                // counterModel.resetCount();
+                Provider.of<CounterModel>(context, listen: false).resetCount();
               },
               child: const Text(
                 'Reset count',
