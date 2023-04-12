@@ -5,7 +5,7 @@ import 'package:state_management/counter_page.dart';
 
 void main() {
   runApp(
-    // 錯誤做法
+    /// 作法 2. 將 ChangeNotifierProvider 移到更 root 的 Widget，不影響結果
     // ChangeNotifierProvider(
     //   create: (context) => CounterModel(),
     //   child: const MyApp(),
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 錯誤做法
+    /// 作法 2. 將 ChangeNotifierProvider 移到更 root 的 Widget，不影響結果
     // return const MaterialApp(
     //   home: MyHomgPage(),
     // );
@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
       create: (context) => CounterModel(),
       child: const MaterialApp(home: MyHomgPage()),
     );
-    // 一般會是複數 Provider
+
+    /// 備注：一般會是複數 Provider
     // return MultiProvider(
     //   providers: [
     //     ChangeNotifierProvider(create: (context) => CounterModel()),
@@ -42,10 +43,6 @@ class MyHomgPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 作法 2.
-    // final counter = Provider.of<CounterModel>(context);
-    // final counterModel = context.read<CounterModel>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
@@ -54,11 +51,6 @@ class MyHomgPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 作法 2.
-            // Text(
-            //   'Total count: ${counter.count}',
-            //   style: Theme.of(context).textTheme.headlineMedium,
-            // ),
             Consumer<CounterModel>(
               builder: (context, counter, child) {
                 return Text('Total count: ${counter.count}');
@@ -70,9 +62,6 @@ class MyHomgPage extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                // 作法 2.
-                // var counterModel = context.read<CounterModel>();
-                // counterModel.resetCount();
                 Provider.of<CounterModel>(context, listen: false).resetCount();
               },
               child: const Text(
@@ -86,7 +75,7 @@ class MyHomgPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            // 錯誤做法
+            // 錯誤做法：會建立一個新的 CounterModel，兩個 CounterModel 之間不會互通
             // MaterialPageRoute(
             //   builder: (context) => ChangeNotifierProvider(
             //       create: (context) => CounterModel(),

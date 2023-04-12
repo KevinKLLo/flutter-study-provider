@@ -7,7 +7,7 @@ class CounterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 作法 2.
+    /// 作法 2. 這種做法可以不需要 Consumer
     // final counter = Provider.of<CounterModel>(context);
     return Scaffold(
       appBar: AppBar(
@@ -18,7 +18,8 @@ class CounterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            // 作法 2.
+
+            /// 作法 2. 這種做法可以不需要 Consumer
             // Text('${counter.count}'),
             Consumer<CounterModel>(
               builder: (context, counter, child) {
@@ -30,10 +31,12 @@ class CounterPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // 作法 2.
-          // var counterModel = context.read<CounterModel>();
-          // counterModel.addCount();
-          Provider.of<CounterModel>(context, listen: false).addCount();
+          /// listen: true 會報錯
+          // Provider.of<CounterModel>(context, listen: false).addCount();
+
+          /// 作法 2. read 是封裝 Provider.of 的用法
+          var counterModel = context.read<CounterModel>();
+          counterModel.addCount();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
